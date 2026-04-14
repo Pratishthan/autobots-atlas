@@ -1,17 +1,10 @@
-# aidlc
+# Atlas — Knowledge Curation Vault
 
-> A knowledge base for AI-assisted software development lifecycle practices, tools, methodologies, and emerging patterns.
+> A personal knowledge base for curating external knowledge — articles, papers, talks, and research across technology, architecture, engineering practices, and adjacent domains.
 
-## Suggested Tags
+This vault is part of the **brain** workspace (`../`). See `../CLAUDE.md` for cross-vault rules and permissions.
 
-- ai-sdlc
-- llm-tooling
-- code-generation
-- ai-agents
-- software-engineering
-- developer-experience
-- prompt-engineering
-- ai-testing
+**Agent permission level: Author** — Claude owns the wiki layer. Full read/write access. Human owns raw sources and this schema.
 
 ## Knowledge Base Rules
 
@@ -44,7 +37,12 @@ Every wiki page MUST include YAML frontmatter:
     sources: [source-filename-1.md, source-filename-2.md]
     created: YYYY-MM-DD
     updated: YYYY-MM-DD
+    blog_seed: false
+    actionable: false
     ---
+
+- `blog_seed: true` — flags this page as potential material for the broadcast vault. Set when a curated topic has a unique angle worth publishing.
+- `actionable: true` — flags this page as sparking an idea that should flow to the forge vault. Set when curated knowledge directly maps to an IDP design concern.
 
 Use `[[wikilink]]` syntax for all internal links. When you mention a concept, entity, or source that has its own page, link it.
 
@@ -86,8 +84,19 @@ When the user asks you to lint or health-check the wiki:
 4. Find important concepts mentioned but lacking their own page
 5. Check for missing cross-references
 6. Suggest data gaps that could be filled with a web search
-7. Report findings and offer to fix issues
-8. Log the lint pass: `## [YYYY-MM-DD] lint | Summary of findings`
+7. Check for pages with `blog_seed: true` or `actionable: true` that haven't been acted on
+8. Report findings and offer to fix issues
+9. Log the lint pass: `## [YYYY-MM-DD] lint | Summary of findings`
+
+### Atlas → Forge Bridge
+
+When Claude identifies curated knowledge that directly relates to an IDP design concern:
+
+1. Set `actionable: true` in the atlas wiki page's frontmatter
+2. **Do not write to forge directly from an atlas session.** The cross-vault bridge is handled at the orchestrator level (see `../CLAUDE.md`).
+3. Note the connection in the log: `## [YYYY-MM-DD] bridge | Page Title → forge relevance: brief description`
+
+This ensures the human is aware of the connection and can initiate the forge draft from the brain workspace.
 
 ## Index Format
 
@@ -146,9 +155,10 @@ You have access to these CLI tools — use them when appropriate:
 2. Always update `wiki/index.md` when you create or delete a page.
 3. Always append to `wiki/log.md` when you perform an operation.
 4. Use `[[wikilinks]]` for all internal references. Never use raw file paths in page content.
-5. Every wiki page must have YAML frontmatter with tags, sources, created, and updated fields.
+5. Every wiki page must have YAML frontmatter with tags, sources, created, updated, blog_seed, and actionable fields.
 6. When new information contradicts existing wiki content, update the wiki page and note the contradiction with both sources cited.
 7. Keep source summary pages factual. Save interpretation and synthesis for concept and synthesis pages.
 8. When asked a question, search the wiki first. Only go to raw sources if the wiki doesn't have the answer.
 9. Prefer updating existing pages over creating new ones. Only create a new page when the topic is distinct enough to warrant it.
 10. Keep `wiki/index.md` concise — one line per page, under 120 characters per entry.
+11. Never write directly to forge, journal, or broadcast from this vault. Cross-vault operations are initiated from the brain orchestrator level.
