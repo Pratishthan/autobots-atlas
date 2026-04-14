@@ -1,8 +1,8 @@
 ---
 tags: [ai-agents, context-management, llm-tooling]
-sources: [The Anatomy of an Agent Harness.md]
+sources: [The Anatomy of an Agent Harness.md, Build Agents that never forget.md]
 created: 2026-04-13
-updated: 2026-04-13
+updated: 2026-04-14
 ---
 
 # Context Rot
@@ -34,6 +34,7 @@ Context rot is one of the core reasons the [[Agent Harness]] must actively manag
 
 ## Related
 
+- [[Lost in the Middle]]
 - [[Context Management]]
 - [[Agent Harness]]
 - [[Orchestration Loop]]
